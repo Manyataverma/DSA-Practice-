@@ -1,1 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 50
+int top;
+int a[MAX];
+void initializeStack();
+int isEmpty();
+int isFull();
+int size();
+void push(int x);
+int pop();
+int peek();
+void display();
+int main()
+{
+    int choice,x;
+    initializeStack();
+    while(1)
+        {
+            printf("1:PUSH THE ELEEMENT ON TO STACK:\n");
+            printf("2:POP THE ELEMENT FROM THE STACK:\n");
+            printf("3:DISPLAY THE TOP ELEMENTS:\n");
+            printf("4:DISPLAY ALL THE ELEMENTS FROM THE STACK:\n");
+            printf("5:DISPLAY SIZE OF THE ELEMENT:\n");
+            printf("6:EXIT\n");
+            printf("ENTER YOUR CHOICE:");
+            scanf("%d",&choice);
+            if(choice==6)
+                break;
+            switch(choice)
+                {
+                    case 1:
+                    printf("push the element on the stack:");
+                    scanf("%d",&x);
+                    push(x);
+                    break;
+
+                    case 2:
+                    x=pop();
+                    printf("pop the element from the stack %d",x);
+                    break;
+
+                    case 3:
+                    printf("display the top elements %d",peek());
+                    break;
+
+                    case 4:
+                    display();
+                    break;
+
+                    case 5:
+                    printf("display size of the elements %d",size());
+                    break;
+
+                    default:
+                    printf("invalid choice");
+                }
+            printf("\n");
+        }
+}
+    void initializeStack()
+    {
+        top=-1;
+    }
+    int size()
+    {
+        return top+1;
+    }
+    int isEmpty()
+    {
+        if(top==-1)
+            return 1;
+        else 
+            return 0;
+    }
+    int isFull()
+    {
+        if(top==MAX-1)
+            return 1;
+        else
+            return 0;
+    }
+    void push(int x)
+    {
+        if(isFull())
+        {
+            printf("stack is overflow");
+            return;
+        }
+        top=top+1;
+        a[top]=x;
+    }
+    int pop()
+    {
+        int x;
+        if(isEmpty())
+        {
+            printf("stack is underflow");
+            exit(1);
+        }
+        x=a[top];
+        top=top-1;
+        return x;
+    }
+    int peek()
+    {
+        if(isEmpty())
+        {
+            printf("stack is underflow");
+            exit(1);
+        }
+        return a[top];
+    }
+    void display()
+    {
+        int i;
+        printf("top=%d",top);
+        if(isEmpty())
+        {
+            printf("stack is empty");
+            return;
+        }
+        printf("stack is not empty:\n\n");
+        for(i=top;i>=0;i--)
+            printf("%d\n",a[i]);
+        printf("\n");
+    }
 
