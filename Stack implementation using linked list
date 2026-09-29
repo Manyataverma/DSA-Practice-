@@ -1,0 +1,138 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node // declare a new type name called node 
+{
+    int info; //data is stored in the node and holds the actual value.
+    struct node *link; // pointer to the next node
+};
+struct node *top; // declare pointer variable named top that can hold address of struct node.
+// top always points to the first node.
+void initializeStack();
+int isEmpty();
+int size();
+void push(int x);
+int pop();
+int peek();
+void display();
+int main()
+{
+    int choice,x;
+    initializeStack();
+    while(1)
+        {
+            printf("1. PUSH AN ELEMENT ON STACK:\n");
+            printf("2.POP ELEMENT FROM THE STACK:\n");
+            printf("3.DISPLAY THE TOP ELEMENT:\n");
+            printf("4.DISPLAY ALL STACK ELEMENTS:\n");
+            printf("5.DISPLAY SIZE OF STACK:\n");
+            printf("6.Exit\n");
+            printf("ENTER YOUR CHOICE:\n");
+            scanf("%d",&choice);
+            if(choice==6)
+                break;
+            switch(choice)
+                {
+                    case 1:
+                    printf("push the element on stack:");
+                    scanf("%d",&x);
+                    push(x);
+                    break;
+
+                    case 2:
+                    x=pop();
+                    printf("pop the element on stack");
+
+                    case 3:
+                    printf("display top element %d",peek());
+                    break;
+
+                    case 4:
+                    display();
+                    break;
+
+                    case 5:
+                    printf("DISPLAY ALL STACK ELEMENTS %d",size());
+                        break;
+                    
+                    default:
+                    printf("wrong choice\n");
+                }
+            printf("\n");
+        }
+}
+void initializeStack()
+{
+    top=NULL;
+}
+int size() 
+{
+    int s=0;
+    struct node *p= top;
+    while(p!=NULL)
+        {
+           p = p->link;
+           s++;
+        }
+    return s;
+}
+void push(int x)
+{
+    struct node *temp;
+    temp=(struct node *)malloc(sizeof(struct node));
+    if(temp==NULL)
+    {
+        printf("no memory:stack overflow\n");
+        return;
+    }
+    temp->info=x;
+    temp->link=top;
+    top=temp;
+}
+int pop()
+{
+    struct node *temp;
+    int x;
+    if(isEmpty())
+    {
+        printf("stack is underflow\n");
+        exit(1);
+    }
+    temp=top;
+    x=temp->info;
+    top= top->link;
+    free(temp);
+    return x;
+}
+int peek()
+{
+    if(isEmpty())
+    {
+        printf("stack is underflow");
+        exit(1);
+    }
+    return top->info;
+}
+int isEmpty()
+{
+    if(top==NULL)
+        return 1;
+    else 
+        return 0;
+}
+void display()
+{
+    struct node *p;
+    p=top;
+    if(isEmpty())
+    {
+        printf("stack is empty");
+        return;
+    }
+    printf("stack is:\n");
+    while(p!=NULL)
+        {
+            printf("%d\n",p->info);
+            p=p->link;
+        }
+    printf("\n");
+}
